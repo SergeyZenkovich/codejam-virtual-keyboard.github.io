@@ -1,7 +1,4 @@
 
-
-// let langRU = true;
-
 window.onload = (event) =>{
     
     var langRU;
@@ -362,7 +359,7 @@ window.onload = (event) =>{
   }
   
   document.onkeydown = changeLanguage;
-  var keys = {};
+ 
   document.addEventListener("keyup", function(event) {
     keys[event.keyCode] = false;
     if (event.getModifierState("CapsLock")) {
