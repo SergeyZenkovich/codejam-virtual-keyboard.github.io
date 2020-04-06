@@ -1,25 +1,32 @@
+const body = document.querySelector('body');
+const container = document.createElement('div');
+const area = document.createElement('div');
+let shift = false;
+let langRU;
 
-window.onload = (event) =>{
-    
-    var langRU;
-    if(localStorage.getItem('lang') === "false"){
-        langRU = false;
-    }
-    else{langRU = true};
-    let shift = false;
-    var body = document.querySelector("body");
-    var container = document.createElement('div');
-    var area = document.createElement('div');
-    area.insertAdjacentHTML('afterbegin',`
-    <textarea rows="5" cols="33" id="text_area" name="name" autofocus></textarea>`);
-    container.className = "container";
-    area.className = 'area';
-    body.append(area);
-    
-    let drawKeyBoard = function(shift){
-        if(langRU && !shift){
-            container.innerHTML ='';
-        container.insertAdjacentHTML ('afterbegin', `
+// -----define language --------
+if (localStorage.getItem('lang') === 'false') {
+  langRU = false;
+} else {
+  langRU = true;
+}
+
+//------create text area field --------
+area.insertAdjacentHTML(
+  'afterbegin',
+  `
+    <textarea rows="5" cols="33" id="text_area" name="name" autofocus></textarea>`
+);
+container.className = 'container';
+area.className = 'area';
+
+// -------- draw keyboard function ------
+const drawKeyBoard = function(shift) {
+  if (langRU && !shift) {
+    container.innerHTML = '';
+    container.insertAdjacentHTML(
+      'afterbegin',
+      `
         <div class="keyboard" id = "keyboard">
         <div class="row row1" id = "row">
             <div class="button" id ='192'>ё</div>
@@ -97,11 +104,13 @@ window.onload = (event) =>{
             <div class="button" id = "39">&#9758</div>
             <div class="button ctrl" id = "17">ctrl</div>
         </div>
-        <div>`);
-        }
-        else if(langRU && shift){
-            container.innerHTML ='';
-            container.insertAdjacentHTML ('afterbegin', `
+        <div>`
+    );
+  } else if (langRU && shift) {
+    container.innerHTML = '';
+    container.insertAdjacentHTML(
+      'afterbegin',
+      `
         <div class="keyboard" id = "keyboard">
         <div class="row row1" id = "row">
             <div class="button" id ='192'>Ё</div>
@@ -179,11 +188,13 @@ window.onload = (event) =>{
             <div class="button" id = "39">&#9758</div>
             <div class="button ctrl" id = "17">ctrl</div>
         </div>
-        <div>`);
-        }
-        else if(!langRU && shift){
-            container.innerHTML = '';
-            container.insertAdjacentHTML ('afterbegin', `
+        <div>`
+    );
+  } else if (!langRU && shift) {
+    container.innerHTML = '';
+    container.insertAdjacentHTML(
+      'afterbegin',
+      `
             <div class="keyboard" id = "keyboard">
             <div class="row row1" id = "row">
                 <div class="button"  id = "192">~</div>
@@ -261,11 +272,13 @@ window.onload = (event) =>{
                 <div class="button"id = "39">&#9758</div>
                 <div class="button ctrl" id = "17">ctrl</div>
             </div>
-            <div>`); 
-        }
-        else{
-           container.innerHTML = '';
-            container.insertAdjacentHTML ('beforeend', `
+            <div>`
+    );
+  } else {
+    container.innerHTML = '';
+    container.insertAdjacentHTML(
+      'beforeend',
+      `
             <div class="keyboard" id = "keyboard">
             <div class="row row1" id = "row">
                 <div class="button" id = "192">\`</div>
@@ -343,244 +356,154 @@ window.onload = (event) =>{
                 <div class="button" id = "39">&#9758</div>
                 <div class="button ctrl" id = "17">ctrl</div>
             </div>
-            <div>`); 
-        }
-        body.append(container);
-    } 
-    drawKeyBoard(shift);     
-    function changeLanguage(e) {
-        var obj = document.event? event : e
-        if ( obj.altKey && obj.ctrlKey){
-            langRU = !langRU;
-            
-        };
-        drawKeyBoard(shift);
-        localStorage.setItem("lang", langRU);
+            <div>`
+    );
   }
-  
-  document.onkeydown = changeLanguage;
- 
-  document.addEventListener("keyup", function(event) {
-    keys[event.keyCode] = false;
-    if (event.getModifierState("CapsLock")) {
-        var x = document.querySelector("#keyboard").children;
-        Array.prototype.forEach.call(x, elem=>{
-            Array.prototype.map.call(elem.children, el=>{
-                if(el.innerHTML.length ===1 && el.className === 'button'){
-                    return el.innerHTML = el.innerHTML.toUpperCase();
-                }
-            
-            });
-         });
-    } 
-    else if(event.key === "Shift") {
-        drawKeyBoard(shift);
-        for (var property in keys){
-            //  debugger;
-             if(keys[property] === false){
-                var y = document.querySelector("#keyboard").children;
-                Array.prototype.forEach.call(y, elem=>{
-                    Array.prototype.map.call(elem.children, el=>{
-                        if(el.id == property){
-                            
-                            event.preventDefault();
-                            return el.classList.remove('buttonCh');
-                        }
-                        else if(el.id ==="buttons"){
-                            Array.prototype.map.call(el.children, e=>{
-                                if(e.id===property){
-                                    return e.classList.remove('buttonCh');
-                                }   
-                            });
-                        }
-                    });
-                 });
-             }
-           
+  body.insertAdjacentElement('afterbegin', container);
+  body.insertAdjacentElement('afterbegin', area);
+};
+drawKeyBoard(shift);
+
+// ------ change language function --------
+function changeLanguage(e) {
+  let obj = document.event ? event : e;
+  if (obj.altKey && obj.ctrlKey) {
+    langRU = !langRU;
+  }
+  drawKeyBoard(shift);
+  localStorage.setItem('lang', langRU);
+  text_area.focus();
+}
+
+// ------ caps lock function -------
+function caps(event) {
+  if (event.getModifierState('CapsLock')) {
+    let x = document.querySelector('#keyboard').children;
+    Array.prototype.forEach.call(x, elem => {
+      Array.prototype.map.call(elem.children, el => {
+        if (el.innerHTML.length === 1 && el.className === 'button') {
+          return (el.innerHTML = el.innerHTML.toUpperCase());
         }
-    }
-    else if(event.keyCode === 20) {
-        var x = document.querySelector("#keyboard").children;
-        Array.prototype.forEach.call(x, elem=>{
-            Array.prototype.map.call(elem.children, el=>{
-                if(el.innerHTML.length ===1 && el.className === 'button'){
-                    return el.innerHTML = el.innerHTML.toLowerCase();
-                }
-            
-            });
-         });
-         
-        console.log(keys);
-      }
-      for (var property in keys){
-        //  debugger;
-         if(keys[property] === false){
-            var y = document.querySelector("#keyboard").children;
-            Array.prototype.forEach.call(y, elem=>{
-                Array.prototype.map.call(elem.children, el=>{
-                    if(el.id == property){
-                        event.preventDefault();
-                        return el.classList.remove('buttonCh');
-                    }
-                    else if(el.id ==="buttons"){
-                        Array.prototype.map.call(el.children, e=>{
-                            if(e.id===property){
-                                return e.classList.remove('buttonCh');
-                            }   
-                        });
-                    }
-                });
-             });
-         }
-       
-    }
+      });
     });
-    var string ='';
-    document.addEventListener("keydown", function(event) {
-        keys[event.keyCode] = true;
-        if (event.getModifierState("Shift")) {
-             drawKeyBoard(event.getModifierState("Shift"));
+  }
+}
 
-            //  text_area.addEventListener('keydown', event=>{
-            //     var str;
-            //     var symbol;
-            //     debugger;
-            //     event.preventDefault();
-            //     if(event.keyCode !==16)
-            //         symbol = event.keyCode + '';
-            //         str= '';
-            //         // string+= event.key;
-            //         str = document.querySelector(`#\\3${symbol[0]} ${symbol.slice(1)}`).innerHTML;
-            //         text_area.value += str;
-            // },false);
+const keys = {};
 
+// ------ event on pressing the button on keyboard ---------
 
-
-
-
-
-
-
-             for (var property in keys){
-                // debugger;
-                if(keys[property] == true){
-                    var x = document.querySelector("#keyboard").children;
-                    Array.prototype.forEach.call(x, elem=>{
-                    Array.prototype.map.call(elem.children, el=>{
-                        if(el.id == property){
-                            return el.classList.add('buttonCh');;
-                        }
-                        else if(el.id ==="buttons"){
-                            Array.prototype.map.call(el.children, e=>{
-                                if(e.id===property){
-                                    return e.classList.add('buttonCh');
-                                }   
-                            });
-                        }
-                    });
-                 });
-                }
-                
+document.addEventListener('keydown', function(event) {
+  changeLanguage(event);
+  caps(event);
+  keys[event.keyCode] = true;
+  if (event.getModifierState('Shift')) {
+    drawKeyBoard(event.getModifierState('Shift'));
+  }
+  for (var property in keys) {
+    if (keys[property] == true) {
+      let x = document.querySelector('#keyboard').children;
+      Array.prototype.forEach.call(x, elem => {
+        Array.prototype.map.call(elem.children, el => {
+          if (el.id == property) {
+            console.log(el.id);
+            if (el.innerHTML.length === 1) {
+              text_area.value += el.innerHTML;
+            } else if (el.id === '32') {
+              text_area.value += ' ';
+            } else if (el.id === '9') {
+              text_area.value += '    ';
+            } else if (el.id === '13') {
+              text_area.value += '\n';
+            } else if (el.id === '8') {
+              text_area.value = text_area.value.slice(
+                0,
+                text_area.value.length - 2
+              );
             }
-
-        }
-        else if (event.getModifierState("CapsLock")) {
-            var x = document.querySelector("#keyboard").children;
-            Array.prototype.forEach.call(x, elem=>{
-                Array.prototype.map.call(elem.children, el=>{
-                    if(el.innerHTML.length ===1 && el.className === 'button'){
-                        return el.innerHTML = el.innerHTML.toUpperCase();
-                    }
-                    for (var property in keys){
-                        // debugger;
-                        if(keys[property] == true){
-                            var x = document.querySelector("#keyboard").children;
-                            Array.prototype.forEach.call(x, elem=>{
-                            Array.prototype.map.call(elem.children, el=>{
-                                if(el.id == property){
-                                    el.innerHTML = el.innerHTML.toUpperCase();
-                                    return el.classList.add('buttonCh');;
-                                }
-                                else if(el.id ==="buttons"){
-                                    Array.prototype.map.call(el.children, e=>{
-                                        if(e.id===property){
-                                            return e.classList.add('buttonCh');
-                                        }   
-                                    });
-                                }
-                            });
-                         });
-                        }
-                        
-                    }
-                });
-             });
-        } 
-        else {
-            for (var property in keys){
-                if(keys[property] == true){
-                    var x = document.querySelector("#keyboard").children;
-                    Array.prototype.forEach.call(x, elem=>{
-                    Array.prototype.map.call(elem.children, el=>{
-                        if(el.id == property){
-                            return el.classList.add('buttonCh');;
-                        }
-                        else if(el.id ==="buttons"){
-                            Array.prototype.map.call(el.children, e=>{
-                                if(e.id===property){
-                                    return e.classList.add('buttonCh');
-                                }   
-                            });
-                        }
-                    });
-                 });
-                }
-                
-            }
-            console.log(keys);
-            // document.querySelector(`#i${x}`).classList.add('buttonCh');
-            // document.addEventListener('keyup',function(event) {
-            //     document.querySelector(`#i${x}`).classList.remove('buttonCh');
-            //  });
-        }
-    });
-    text_area.addEventListener('keydown', event=>{
-        var str;
-        var symbol;
-        event.preventDefault();
-        
-        if(event.keyCode !==16 &&event.keyCode !==18 && event.keyCode !==17 && event.keyCode !==8 && event.keyCode !==9 && event.keyCode !==91 && event.keyCode !==32 && event.keyCode !==20 && event.keyCode !==13 ){
-            symbol = event.keyCode + '';
-            str= '';
-            // string+= event.key;
-            str = document.querySelector(`#\\3${symbol[0]} ${symbol.slice(1)}`).innerHTML;
-            text_area.value += str;
-        }
-        else if(event.keyCode ===8){
-            text_area.value = text_area.value.slice(0,text_area.value.length-1);
-        }
-        else if(event.keyCode ===32){
-            text_area.value += ' ';
-        }
-        else if(event.keyCode ===9){
-            text_area.value += '    ';
-        }
-        else if(event.keyCode ===13){
-            text_area.value += '\n';
-        }
-    },false);
-
-    var elements = document.querySelector("#keyboard").children;
-    Array.prototype.forEach.call(elements, elem=>{
-        Array.prototype.map.call(elem.children, el=>{
-            if(el.innerHTML.length ===1 && el.className === 'button'){
-                el.addEventListener('click', ()=>{
-                    text_area.value += el.innerHTML; 
-                });
-            }
+            return el.classList.add('buttonCh');
+          } else if (el.id === 'buttons') {
+            Array.prototype.map.call(el.children, e => {
+              if (e.id === property) {
+                text_area.value += e.innerHTML;
+                return e.classList.add('buttonCh');
+              }
+            });
+          }
         });
+      });
+    }
+  }
+});
+
+document.addEventListener('keyup', function(event) {
+  keys[event.keyCode] = false;
+  if (event.key === 'Shift') {
+    drawKeyBoard(shift);
+  }
+  for (var property in keys) {
+    //  debugger;
+    if (keys[property] === false) {
+      let y = document.querySelector('#keyboard').children;
+      Array.prototype.forEach.call(y, elem => {
+        Array.prototype.map.call(elem.children, el => {
+          if (el.id == property) {
+            event.preventDefault();
+            return el.classList.remove('buttonCh');
+          } else if (el.id === 'buttons') {
+            Array.prototype.map.call(el.children, e => {
+              if (e.id === property) {
+                return e.classList.remove('buttonCh');
+              }
+            });
+          }
+        });
+      });
+    }
+  }
+});
+
+/// ------ preventing default behaviour of keyboard --------
+
+text_area.addEventListener('keydown', function(e) {
+  e.preventDefault();
+});
+
+// ------ event on clicking screen keyboard -----------
+
+document.querySelector('.container').addEventListener('click', event => {
+  let button = event.target;
+
+  if (
+    button.innerHTML !== 'tab' &&
+    button.innerHTML !== 'caps lock' &&
+    button.innerHTML !== 'shift' &&
+    button.innerHTML !== 'ctrl' &&
+    button.innerHTML !== 'alt' &&
+    button.innerHTML !== 'win' &&
+    button.innerHTML !== '' &&
+    button.innerHTML !== 'enter' &&
+    button.innerHTML !== 'backspace' &&
+    button.classList[0] === 'button'
+  ) {
+    text_area.value += button.innerHTML;
+  } else if (button.innerHTML === 'backspace') {
+    text_area.value = text_area.value.slice(0, text_area.value.length - 1);
+  } else if (button.innerHTML === '') {
+    text_area.value += ' ';
+  } else if (button.innerHTML === 'tab') {
+    text_area.value += '    ';
+  } else if (button.innerHTML === 'enter') {
+    text_area.value += '\n';
+  }
+});
+
+document.querySelector('.container').addEventListener('mousedown', event => {
+  let button = event.target;
+  if (button.classList[0] == 'button') {
+    button.classList.add('buttonCh');
+    button.addEventListener('mouseup', () => {
+      button.classList.remove('buttonCh');
     });
-        
-}  
-
-
+  }
+});

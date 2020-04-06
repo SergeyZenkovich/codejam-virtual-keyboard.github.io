@@ -1,94 +1,94 @@
-body{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: 'Open Sans', sans-serif;
 }
-.container{
-    width: 90%;
-    background-color: antiquewhite;
-    border: 1px solid #000000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: column;
+.container {
+  width: 90%;
+  background-color: antiquewhite;
+  border: 1px solid #000000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
 }
-.area{
-    width: 80%;
-    height: 200px;
+.area {
+  width: 80%;
+  height: 200px;
 }
-#text_area{
-    width: 100%;
+#text_area {
+  width: 100%;
 }
-.keyboard{
-    width: 80%;
-    height: 350px;
-    background-color: #ffffff;
-    display: flex;
-    justify-content:space-between;
-    flex-direction: column;
+.keyboard {
+  width: 80%;
+  height: 350px;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 }
-.row{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+.row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
-.buttons{
-    width:6%;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
+.buttons {
+  width: 6%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 }
-.buttons button{
-    width:100%;
+.buttons button {
+  width: 100%;
 }
-.button{
-    width:6.5%;
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 5px;
-    color: #ffffff;
-    background-color: #343434;
+.button {
+  width: 6.5%;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  color: #ffffff;
+  background-color: #343434;
 }
-.buttonCh{
-    background-color: #8454c4;
-    transform:  rotateY(25deg);
+
+.button:hover {
+  cursor: pointer;
 }
-.button:hover{
-    background: #433434;
-    cursor: pointer;
-    transform:  rotateY(35deg);
+.buttonCh {
+  background-color: #807f7f;
+  transform: rotateY(25deg);
 }
-.buttons > .button{
-    width:100%;
-    height: 25px;
+.buttons > .button {
+  width: 100%;
+  height: 25px;
 }
-.back{
-    width: 10%;
+.back {
+  width: 11%;
 }
-.tab{
-    width: 10%;
+.tab {
+  width: 10%;
 }
-.caps{
-    width: 10%;
+.caps {
+  width: 10%;
 }
-.enter{
-    width: 12%;
+.enter {
+  width: 12%;
 }
-.shift{
-    width: 11%;
+.shift {
+  width: 11%;
 }
-.space{
-    width: 30%;
+.space {
+  width: 30%;
 }
-.ctrl{
-    width: 10%;
+.ctrl {
+  width: 10%;
 }
-.win{
-    width: 10%;
+.win {
+  width: 10%;
 }
-.alt{
-    width: 8%;
+.alt {
+  width: 8%;
 }
